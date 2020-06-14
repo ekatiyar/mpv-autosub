@@ -3,7 +3,12 @@
 --=============================================================================
 --          This script uses Subliminal to download subtitles,
 --          so make sure to specify your system's Subliminal location below:
-local subliminal = '/opt/anaconda3/bin/subliminal'
+local subliminal = "C:\\Users\\Eashaan\\AppData\\Local\\Programs\\Python\\Python38-32\\Scripts\\subliminal.exe"
+--          A default directory needs to be configured if you are streaming 
+--          a video. The subtitle file will persist after exiting mpv
+local default_directory = ""
+--          CHANGE THIS TO TRUE TO ENABLE STREAM SUBTITLES
+local stream_enabled = false
 --=============================================================================
 -->>    SUBTITLE LANGUAGE:
 --=============================================================================
@@ -15,7 +20,7 @@ local languages = {
 --          other languages will NOT be downloaded,
 --          so put your preferred language first:
             { 'English', 'en', 'eng' },
-            { 'Dutch', 'nl', 'dut' },
+--          { 'Dutch', 'nl', 'dut' },
 --          { 'Spanish', 'es', 'spa' },
 --          { 'French', 'fr', 'fre' },
 --          { 'German', 'de', 'ger' },
@@ -98,7 +103,6 @@ function download_subs(language)
     a[#a + 1] = '-d'
     a[#a + 1] = directory
     a[#a + 1] = filename --> Subliminal command ends with the movie filename.
-
     local result = utils.subprocess(table)
 
     if string.find(result.stdout, 'Downloaded 1 subtitle') then
@@ -126,14 +130,22 @@ function control_downloads()
     mp.set_property('sub-auto', 'fuzzy')
     -- Set subtitle language preference:
     mp.set_property('slang', languages[1][2])
-    mp.msg.warn('Reactivate external subtitle files:')
-    mp.commandv('rescan_external_files')
+    
     directory, filename = utils.split_path(mp.get_property('path'))
 
     if directory:find('^http') then
-        mp.msg.warn('Automatic subtitle downloading is disabled for web streaming')
-        return
+        mp.msg.warn('Automatic subtitle downloading for web streaming may fail')
+        if stream_enabled then
+            mp.set_property('sub-file-paths', default_directory)
+            directory = default_directory
+        else
+            mp.msg.warn('Subtitles for streams are disabled')
+            return
+        end
     end
+
+    mp.msg.warn('Reactivate external subtitle files:')
+    mp.commandv('rescan_external_files')
 
     if not bools.auto then
         mp.msg.warn('Automatic downloading disabled!')
