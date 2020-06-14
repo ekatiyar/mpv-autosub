@@ -3,7 +3,7 @@
 --=============================================================================
 --          This script uses Subliminal to download subtitles,
 --          so make sure to specify your system's Subliminal location below:
-local subliminal = "C:\\Users\\Eashaan\\AppData\\Local\\Programs\\Python\\Python38-32\\Scripts\\subliminal.exe"
+local subliminal = ""
 --          A default directory needs to be configured if you are streaming 
 --          a video. The subtitle file will persist after exiting mpv
 local default_directory = ""
