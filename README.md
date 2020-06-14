@@ -1,7 +1,8 @@
-# [Automatic subtitle downloading for MPV](https://github.com/davidde/mpv-autosub)
+# [Automatic subtitle downloading for MPV](https://github.com/ekatiyar/mpv-autosub)
 * Cross-platform: **Windows, Mac and Linux**
 * Multi-language support
 * Subtitle provider login support
+* Subtitles for streams can also be enabled
 * **No hotkeys required**: opening a video will automatically trigger subtitles to download  
   (Only when the right subtitles are not yet present)
 
@@ -40,6 +41,10 @@ pip install subliminal
      ```
      On Windows, the backslashes in the path need to be escaped, e.g.:  
      **C:\\\\Users\\\\Administrator\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python37\\\\Scripts\\\\subliminal.exe**
+ 
+3. Optionally, you can also enable auto-sub for video streams, although this may not work.
+   - Set a default directory for stream subtitles to be downloaded to. Note that this file persists even after the stream is closed.
+   - set the stream_enabled boolean to true
 
 ## Customization
 * Optionally change the subtitle languages / [ISO codes](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes).
@@ -61,5 +66,4 @@ you might be interested in the [submod](https://github.com/davidde/submod_rs)
 command line tool I've written to manually correct subtitle timing.
 
 ## Credits
-Inspired by [selsta's](https://gist.github.com/selsta/ce3fb37e775dbd15c698) and
-[fullmetalsheep's](https://gist.github.com/fullmetalsheep/28c397b200a7348027d983f31a7eddfa) autosub scripts.
+This is a fork of [davidde's ](https://github.com/davidde/mpv-autosub) autosub script.
